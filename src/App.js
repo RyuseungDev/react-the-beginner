@@ -4,12 +4,8 @@ function App() {
   const [loding, setLoding] = useState(true);
   const [coins, setCoins] = useState([]);
 
-  const [selectedCoinId, setSelectedCoinId] = useState("");
-
+  const [selectCoin, setSelectCoin] = useState({});
   const [money, setMoney] = useState(0);
-  const [amount, setAmount] = useState(0);
-  const [coinPrice, setCoinPrice] = useState(0);
-  const [lastUpdate, setLastUpdate] = useState("");
 
   useEffect(() => {
     fetch("https://api.coinpaprika.com/v1/tickers")
@@ -17,28 +13,19 @@ function App() {
       .then((data) => {
         setCoins(data);
         setLoding(false);
-        setSelectedCoinId(data[0].id);
+        setSelectCoin(data[0]);
       });
   }, []);
 
-  useEffect(() => {
-    if (selectedCoinId) {
-      const coin = coins.find((coin) => coin.id === selectedCoinId);
-      setCoinPrice(coin.quotes.USD.price);
-      setLastUpdate(coin.last_updated);
-    }
-  }, [selectedCoinId, coins]);
-
-  useEffect(() => {
-    setAmount(money / coinPrice);
-  }, [money, coinPrice]);
-
   const onSelect = (event) => {
-    const coinId = event.target.value;
-    setSelectedCoinId(coinId);
+    const id = event.target.value;
+    const coin = coins.find((coin) => coin.id === id);
+    setSelectCoin(coin);
   };
 
-  const handleInput = (event) => setMoney(event.target.value);
+  const handleInput = (event) => {
+    setMoney(event.target.value);
+  };
 
   return (
     <div>
@@ -64,9 +51,10 @@ function App() {
             ></input>
           </form>
           <div>
-            {<p>Last Update: {selectedCoinId ? lastUpdate : null}</p>}
+            <p>Last Update: {selectCoin ? selectCoin.last_updated : null}</p>
             <h2>
-              You can get {typeof amount === "number" ? amount : "0"} coins
+              You can get {money / selectCoin.quotes.USD.price}
+              coins
             </h2>
           </div>
         </div>

@@ -74,3 +74,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 Issue:
 
 1. Failed to extract values from Object format -> Changed to State format.
+   - resolve: Move the code related to 'setSelectedCoin' to the top.
+   - Cause: Error occurred due to attempting to use data before it was loaded.

@@ -18,15 +18,18 @@ function Home() {
   }, []);
 
   return (
-    <h1>
+    <div className={styles.container}>
       {loading ? (
-        "Loding ..."
+        <div className={styles.loader}>
+          <span>Loading...</span>
+        </div>
       ) : (
-        <div>
+        <div className={styles.movies}>
           {movies.map((movie) => (
             <Movie
               key={movie.id}
               id={movie.id}
+              year={movie.year}
               coverImg={movie.medium_cover_image}
               title={movie.title}
               summary={movie.summary}
@@ -35,8 +38,7 @@ function Home() {
           ))}
         </div>
       )}
-    </h1>
+    </div>
   );
 }
-
 export default Home;

@@ -17,7 +17,7 @@ function Detail() {
   return (
     <div>
       <h1>{movie.title}</h1>
-      <img src={movie.large_cover_image}></img>
+      <img src={movie.large_cover_image} alt={movie.title}></img>
       <div>
         <span>rating: {movie.rating}</span>
         <span>runtime: {movie.runtime}</span>
